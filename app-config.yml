@@ -1,0 +1,19 @@
+# ref https://raw.githubusercontent.com/nais/naisd/master/nais_example.yaml
+image: docker.adeo.no:5000/fo/frontendlogger
+replicas:
+  min: 2
+  max: 4
+  cpuThresholdPercentage: 50
+port: 8080
+healthcheck:
+  liveness:
+    path: frontendlogger/internal/isAlive
+    initialDelay: 20
+  readiness:
+    path: frontendlogger/internal/selftest
+    initialDay: 20
+fasitResources:
+  exposed:
+  - alias: logger
+    resourceType: restservice
+    path: /frontendlogger/api
