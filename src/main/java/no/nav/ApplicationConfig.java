@@ -23,6 +23,11 @@ public class ApplicationConfig implements ApiApplication {
         return APPLICATION_NAME;
     }
 
+    @Override
+    public boolean brukSTSHelsesjekk() {
+        return false;
+    }
+
     public static final String APPLICATION_NAME = "frontendlogger";
 
 }
