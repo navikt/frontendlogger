@@ -33,7 +33,7 @@ public class LoggRessurs {
     }
 
     @POST
-    public void log(@PathParam("level") String level, Map<?, ?> logMsg) {
+    public void log(@PathParam("level") String level, Map<String, Object> logMsg) {
         Level logLevel = Level.valueOf(level.toUpperCase());
         logMap.get(logLevel).accept(appendEntries(logMsg), null);
     }

@@ -9,6 +9,7 @@ import static no.nav.apiapp.ApiApplication.Sone.FSS;
 
 @Configuration
 @Import({
+        ScriptRessurs.class,
         LoggRessurs.class
 })
 public class ApplicationConfig implements ApiApplication {
