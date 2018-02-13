@@ -15,7 +15,7 @@
 
         data.url = window.location.href;
         data.userAgent = window.navigator.userAgent;
-        data.appname = appname; // Injectes i koden av ScriptRessurs
+        data.appname = appname;
         fetch(url + level, {
             method: 'POST',
             headers: headers,
