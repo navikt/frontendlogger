@@ -5,16 +5,16 @@ alle applikasjoner kan bruke.
 
 ### Eksempel på bruk:
 
-Det anbefales å bruke de to følgende script-taggene i index.html.
-Førstnevnte gir en fallback slik at applikasjonen din ikke feiler om frontendloggeren skulle være nede.
+De to følgende script-tagene må legges til i index.html
+Førstnevnte gir en fallback slik at applikasjonen din ikke feiler om frontendloggeren skulle være nede, og spesifiserer `appname` som skal brukes.
 Funksjonene definert i `window.frontendlogger` blir overskrevet scriptet blir lastet inn.
 
-For å få riktig navn i kibana må `appname` sendes med som nedenfor.
 ```html
 <script type="application/javascript">
     window.frontendlogger = { info: function(){}, warn: function(){}, error: function(){}};
+    window.frontendlogger.appname = 'testapp';
 </script>
-<script type="application/javascript" src="/frontendlogger/api/logger.js?appname=testapp"></script>
+<script type="application/javascript" src="/frontendlogger/api/logger.js"></script>
 ```
 
 ### NB
