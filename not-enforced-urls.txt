@@ -1,0 +1,2 @@
+https://${DomainName}/frontendlogger/*
+https://${DomainName}/frontendlogger
