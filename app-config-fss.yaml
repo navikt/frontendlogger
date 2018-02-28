@@ -8,10 +8,10 @@ port: 8080
 healthcheck:
   liveness:
     path: frontendlogger/internal/isAlive
-    initialDelay: 20
+    initialDelay: 60
   readiness:
     path: frontendlogger/internal/selftest
-    initialDay: 20
+    initialDelay: 60
 fasitResources:
   exposed:
   - alias: frontendloggerFssApi
