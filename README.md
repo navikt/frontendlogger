@@ -14,7 +14,7 @@ Funksjonene definert i `window.frontendlogger` blir overskrevet scriptet blir la
     window.frontendlogger = { info: function(){}, warn: function(){}, error: function(){}};
     window.frontendlogger.appname = 'testapp';
 </script>
-<script type="application/javascript" src="/frontendlogger/api/logger.js"></script>
+<script type="application/javascript" src="/frontendlogger/logger.js"></script>
 ```
 
 ### NB
