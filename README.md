@@ -17,5 +17,16 @@ Funksjonene definert i `window.frontendlogger` blir overskrevet scriptet blir la
 <script type="application/javascript" src="/frontendlogger/logger.js"></script>
 ```
 
+Errors som propageres til `window` vil automatisk bli fanget opp og logger som `error`.
+Hvis man ønsker å manuelt sende logger fra applikasjonen kan det gjøres ved å kalle `window.frontendlogger.info` fra applikasjonen.
+
+```javascript
+window.frontendlogger.info('Min melding');
+window.frontendlogger.info({
+    message: 'Min melding',
+    extra_felt_til_kibana: 'Litt ekstra informasjon her'
+});
+```
+
 ### NB
 Frontend-scriptet forventer at `fetch` finnes på det globale-scopet, hvis dette ikke finnes vil den loggen en feilmelding.
