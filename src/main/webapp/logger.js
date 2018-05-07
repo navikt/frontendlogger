@@ -13,6 +13,10 @@
             return;
         }
 
+        if (typeof data === 'string') {
+            data = { message: data };
+        }
+
         data.url = window.location.href;
         data.userAgent = window.navigator.userAgent;
         data.appname = appname;
