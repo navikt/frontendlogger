@@ -36,6 +36,7 @@
         }
     }
 
+    var oldOnError = window.onerror;
     window.onerror = function (message, url, line, column) {
         var json = {
             message: message,
@@ -44,6 +45,9 @@
             column: column
         };
         post('error', json);
+        if (oldOnError) {
+            oldOnError.apply(this, arguments);
+        }
     };
 
     window.frontendlogger.info = function(data) { post('info', data); };
