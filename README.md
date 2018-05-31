@@ -27,6 +27,3 @@ window.frontendlogger.info({
     extra_felt_til_kibana: 'Litt ekstra informasjon her'
 });
 ```
-
-### NB
-Frontend-scriptet forventer at `fetch` finnes på det globale-scopet, hvis dette ikke finnes vil den loggen en feilmelding.
