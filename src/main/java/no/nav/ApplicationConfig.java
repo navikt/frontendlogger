@@ -1,7 +1,8 @@
 package no.nav;
 
 
-import no.nav.apiapp.ApiApplication;
+import no.nav.apiapp.ApiApplication.NaisApiApplication;
+import no.nav.apiapp.config.ApiAppConfigurator;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
@@ -11,12 +12,7 @@ import static no.nav.apiapp.ApiApplication.Sone.FSS;
 @Import({
         LoggRessurs.class
 })
-public class ApplicationConfig implements ApiApplication {
-
-    @Override
-    public Sone getSone() {
-        return FSS;
-    }
+public class ApplicationConfig implements NaisApiApplication {
 
     @Override
     public String getApplicationName() {
@@ -30,4 +26,8 @@ public class ApplicationConfig implements ApiApplication {
 
     public static final String APPLICATION_NAME = "frontendlogger";
 
+    @Override
+    public void configure(ApiAppConfigurator apiAppConfigurator) {
+
+    }
 }
