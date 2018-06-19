@@ -17,6 +17,6 @@ public class MetrikkRessurs {
         var newEvent = createEvent(event.getName());
         event.getFields().entrySet().forEach(entry -> newEvent.addFieldToReport(entry.getKey(), entry.getValue()));
         event.getTags().entrySet().forEach(entry -> newEvent.addTagToReport(entry.getKey(), entry.getValue()));
-
+        newEvent.report();
     }
 }
