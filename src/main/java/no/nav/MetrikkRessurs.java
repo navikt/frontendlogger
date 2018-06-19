@@ -1,5 +1,6 @@
 package no.nav;
 
+import lombok.experimental.var;
 import org.springframework.stereotype.Component;
 
 import javax.ws.rs.POST;
@@ -12,9 +13,10 @@ import static no.nav.metrics.MetricsFactory.createEvent;
 public class MetrikkRessurs {
 
     @POST
-    public void lagEvent(Metrikk metrikk) {
-        createEvent(metrikk.getEvent())
-                .addFieldToReport(metrikk.getField(), metrikk.getValue())
-                .report();
+    public void lagEvent(Event event) {
+        var newEvent = createEvent(event.getName());
+        event.getFields().entrySet().forEach(entry -> newEvent.addFieldToReport(entry.getKey(), entry.getValue()));
+        event.getTags().entrySet().forEach(entry -> newEvent.addTagToReport(entry.getKey(), entry.getValue()));
+
     }
 }
