@@ -50,6 +50,14 @@
             <artifactId>logstash-logback-encoder</artifactId>
             <version>4.10</version>
         </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>no.nav</groupId>
+            <artifactId>metrics</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
