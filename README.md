@@ -11,7 +11,7 @@ Funksjonene definert i `window.frontendlogger` blir overskrevet scriptet blir la
 
 ```html
 <script type="application/javascript">
-    window.frontendlogger = { info: function(){}, warn: function(){}, error: function(){}};
+    window.frontendlogger = { info: function(){}, warn: function(){}, error: function(){}, event: function(){}};
     window.frontendlogger.appname = 'testapp';
 </script>
 <script type="application/javascript" src="/frontendlogger/logger.js"></script>
@@ -26,4 +26,14 @@ window.frontendlogger.info({
     message: 'Min melding',
     extra_felt_til_kibana: 'Litt ekstra informasjon her'
 });
+```
+
+Hvis man ønsker å logge events/metrikker til Grafana fra applikasjonen kan det gjøres ved å kalle `window.frontendlogger.event(name, fields, tags)` fra applikasjonen.
+
+```javascript
+window.frontendlogger.event(
+    'Tiltakinfo-sidevisning', 
+    {'underOppfolging':true, 'Feltnavn2':3}, 
+    {'Tagnavn1':'TagVerdi1','Tagnavn2':'TagVerdi2'}
+);
 ```
