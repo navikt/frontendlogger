@@ -19,6 +19,11 @@ public class ApplicationConfig implements NaisApiApplication {
     }
 
     @Override
+    public String getContextPath() {
+        return "/frontendlogger";
+    }
+
+    @Override
     public void configure(ApiAppConfigurator apiAppConfigurator) {
 
     }
