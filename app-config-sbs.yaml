@@ -5,6 +5,9 @@ replicas:
   max: 4
   cpuThresholdPercentage: 50
 port: 8080
+resources:
+  limits:
+    cpu: 3
 healthcheck:
   liveness:
     path: frontendlogger/internal/isAlive
@@ -12,8 +15,12 @@ healthcheck:
   readiness:
     path: frontendlogger/internal/selftest
     initialDelay: 60
+prometheus:
+  enabled: true
+  path: frontendlogger/internal/metrics
 fasitResources:
   exposed:
   - alias: frontendloggerSbsApi
     resourceType: restservice
     path: /frontendlogger/api
+team: oppfolging
