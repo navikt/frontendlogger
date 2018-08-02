@@ -37,7 +37,8 @@
             message: message,
             jsFileUrl: url,
             lineNumber: line,
-            column: column
+            column: column,
+            messageIndexed: message
         };
         if (error) {
             json["stacktrace"] = error.stack ?  error.stack : error;
