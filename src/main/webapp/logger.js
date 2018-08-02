@@ -32,13 +32,17 @@
     }
 
     var oldOnError = window.onerror;
-    window.onerror = function (message, url, line, column) {
+    window.onerror = function (message, url, line, column, error) {
         var json = {
             message: message,
             jsFileUrl: url,
             lineNumber: line,
-            column: column
+            column: column,
+            messageIndexed: message
         };
+        if (error) {
+            json["stacktrace"] = error.stack ?  error.stack : error;
+        }
         post('error', json);
         if (oldOnError) {
             oldOnError.apply(this, arguments);
