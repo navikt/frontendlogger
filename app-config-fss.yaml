@@ -20,6 +20,8 @@ prometheus:
   path: frontendlogger/internal/metrics
 fasitResources:
   used:
+  - alias: appdynamics
+    resourceType: applicationproperties
   - alias: loadbalancer:frontendlogger-fss
     resourceType: loadbalancerconfig
   - alias: loadbalancer:frontendlogger-fss-modapp

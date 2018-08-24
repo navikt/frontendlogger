@@ -19,6 +19,9 @@ prometheus:
   enabled: true
   path: frontendlogger/internal/metrics
 fasitResources:
+  used:
+  - alias: appdynamics
+      resourceType: applicationproperties
   exposed:
   - alias: frontendloggerSbsApi
     resourceType: restservice
