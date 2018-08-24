@@ -19,6 +19,11 @@ prometheus:
   enabled: true
   path: frontendlogger/internal/metrics
 fasitResources:
+  used:
+  - alias: loadbalancer:frontendlogger-fss
+    resourceType: loadbalancerconfig
+  - alias: loadbalancer:frontendlogger-fss-modapp
+    resourceType: loadbalancerconfig
   exposed:
   - alias: frontendloggerFssApi
     resourceType: restservice
