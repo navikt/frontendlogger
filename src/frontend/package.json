@@ -1,0 +1,27 @@
+{
+  "name": "frontendlogger",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build:js": "browserify ./src/index.js -o ./../main/webapp/logger.js -t babelify",
+    "uglify:js": "uglifyjs ./../main/webapp/logger.js -o ./../main/webapp/logger.js --source-map \"url='logger.js.map'\" --compress --mangle",
+    "build": "npm run build:js && npm run uglify:js",
+    "lint": "echo no",
+    "test": "echo no",
+    "test:coverage": "echo no"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "serialize-error": "^2.1.0",
+    "whatwg-fetch": "^2.0.4"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.0.0-rc.3",
+    "@babel/preset-env": "^7.0.0-rc.3",
+    "babelify": "^9.0.0",
+    "browserify": "^16.2.2",
+    "uglify-js": "^3.4.8"
+  }
+}
