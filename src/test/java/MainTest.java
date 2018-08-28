@@ -7,7 +7,7 @@ public class MainTest {
                 .applicationName("frontendlogger")
                 .build()
         );
-        Main.main(args);
+        Main.main("8791", "8792");
     }
 
 }
