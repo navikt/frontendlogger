@@ -41,6 +41,8 @@ window.onerror = function (message, url, line, column, error) {
             column,
             error: serializError(error)
         };
+        json["stacktrace"] = error.stack ?  error.stack : error;
+
         api.post('/pinpoint/api/pinpoint', body)
             .then((resp) => resp.json())
             .then((resolved) => report('error', {...json, ...resolved}))
