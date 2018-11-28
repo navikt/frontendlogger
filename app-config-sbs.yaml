@@ -15,10 +15,10 @@ resources:
 healthcheck:
   liveness:
     path: frontendlogger/internal/isAlive
-    initialDelay: 60
+    initialDelay: 20
   readiness:
     path: frontendlogger/internal/isReady
-    initialDelay: 60
+    initialDelay: 20
 prometheus:
   enabled: true
   path: frontendlogger/internal/metrics
