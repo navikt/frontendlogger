@@ -8,12 +8,16 @@ port: 8080
 resources:
   limits:
     cpu: 3
+    memory: 768Mi
+  requests:
+    cpu: 200m
+    memory: 512Mi
 healthcheck:
   liveness:
     path: frontendlogger/internal/isAlive
     initialDelay: 60
   readiness:
-    path: frontendlogger/internal/selftest
+    path: frontendlogger/internal/isReady
     initialDelay: 60
 prometheus:
   enabled: true
@@ -29,3 +33,6 @@ fasitResources:
     resourceType: restservice
     path: /frontendlogger/api
 team: oppfolging
+alertProfiles:
+ - common-java-modules
+
