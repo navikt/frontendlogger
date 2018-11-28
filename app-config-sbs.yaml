@@ -22,6 +22,8 @@ fasitResources:
   used:
   - alias: appdynamics
     resourceType: applicationproperties
+  - alias: loadbalancer:arbeidsplassen-frontendlogger
+    resourceType: loadbalancerconfig
   exposed:
   - alias: frontendloggerSbsApi
     resourceType: restservice
