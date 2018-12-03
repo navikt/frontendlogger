@@ -1,4 +1,4 @@
-# FO-FRONTENDLOGGER
+# FRONTENDLOGGER
 
 Felles applikasjon som håndterer logging fra frontend og eksponerer ett script som 
 alle applikasjoner kan bruke.
