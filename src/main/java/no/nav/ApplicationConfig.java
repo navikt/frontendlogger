@@ -9,7 +9,8 @@ import org.springframework.context.annotation.Import;
 @Configuration
 @Import({
         MetrikkRessurs.class,
-        LoggRessurs.class
+        LoggRessurs.class,
+        YtelseRessurs.class
 })
 public class ApplicationConfig implements NaisApiApplication {
 
