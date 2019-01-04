@@ -24,6 +24,16 @@ function reportEvent(name, fields, tags) {
     report('event', { name, fields, tags });
 }
 
+function logPerformance(loadTime) {
+    report('performance', { pageLoadTime: loadTime });
+}
+
+function pageLoadTime() {
+    const navEntry = performance.getEntriesByType('navigation')[0];
+    // https://w3c.github.io/navigation-timing/#processing-model
+    return navEntry.loadEventEnd - navEntry.fetchStart;
+}
+
 window.onerror = function (message, url, line, column, error) {
     const json = {
         message: message,
@@ -54,6 +64,21 @@ window.onerror = function (message, url, line, column, error) {
         oldOnError.apply(this, arguments);
     }
 };
+
+window.addEventListener('load',function() {
+    reportInitialLoad();
+});
+
+function reportInitialLoad() {
+    const navEntry = performance.getEntriesByType('navigation')[0];
+    if(navEntry && navEntry.loadEventEnd > 0) {
+        const loadTime = pageLoadTime();
+        logPerformance(loadTime)
+    } else {
+        setTimeout(reportInitialLoad, 1000);
+    }
+}
+
 window.frontendlogger.info = function(data) { log('info', data); };
 window.frontendlogger.warn = function(data) { log('warn', data); };
 window.frontendlogger.error = function(data) { log('error', data); };
