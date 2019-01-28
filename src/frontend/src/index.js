@@ -34,22 +34,18 @@ window.onerror = function (message, url, line, column, error) {
     };
 
     if (error) {
-        const body = {
+        json.stacktrace = error.stack ? error.stack : error;
+        json.pinpoint = {
             message,
             url,
             line,
             column,
             error: serializError(error)
         };
-        json["stacktrace"] = error.stack ?  error.stack : error;
-
-        api.post('/pinpoint/api/pinpoint', body)
-            .then((resp) => resp.json())
-            .then((resolved) => report('error', {...json, ...resolved}))
-            .catch(() => report('error', json))
-    } else {
-        report('error', json);
     }
+
+    report('error', json);
+
     if (oldOnError) {
         oldOnError.apply(this, arguments);
     }
