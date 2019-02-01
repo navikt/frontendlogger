@@ -15,8 +15,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiConsumer;
 
-import static java.util.Optional.ofNullable;
 import static net.logstash.logback.marker.Markers.appendEntries;
+import static no.nav.OriginApplicationNameResolver.resolveApplicationName;
 import static org.slf4j.LoggerFactory.getLogger;
 
 @Component
@@ -25,7 +25,6 @@ public class LoggRessurs {
 
     private static final Logger LOG = getLogger(LoggRessurs.class);
     private static final MeterRegistry meterRegistry = MetricsFactory.getMeterRegistry();
-    private static final String APPLICATION_ATTRIBUTE_NAME = "appname";
 
     private static final Map<Level, BiConsumer<Marker, String>> logMap;
 
@@ -50,12 +49,11 @@ public class LoggRessurs {
     @POST
     public void log(@PathParam("level") String level, Map<String, Object> logMsg) {
         Level logLevel = Level.valueOf(level.toUpperCase());
-        String appname = ofNullable(logMsg.get(APPLICATION_ATTRIBUTE_NAME)).map(Object::toString).orElse("unknown");
 
         meterRegistry.counter(
                 "frontend_logger",
                 "origin_app",
-                appname,
+                resolveApplicationName(logMsg),
                 "level",
                 logLevel.name()
         ).increment();

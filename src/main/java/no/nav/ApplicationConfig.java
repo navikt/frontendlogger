@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Import;
 @Import({
         MetrikkRessurs.class,
         LoggRessurs.class,
+        YtelseRessurs.class,
         PinpointClient.class
 })
 public class ApplicationConfig implements ApiApplication {

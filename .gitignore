@@ -7,3 +7,4 @@ target/
 
 *.log
 src/main/webapp/logger.js*
+src/frontend/build
