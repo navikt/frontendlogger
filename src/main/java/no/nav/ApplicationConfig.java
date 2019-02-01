@@ -1,7 +1,7 @@
 package no.nav;
 
 
-import no.nav.apiapp.ApiApplication.NaisApiApplication;
+import no.nav.apiapp.ApiApplication;
 import no.nav.apiapp.config.ApiAppConfigurator;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -10,14 +10,10 @@ import org.springframework.context.annotation.Import;
 @Import({
         MetrikkRessurs.class,
         LoggRessurs.class,
-        YtelseRessurs.class
+        YtelseRessurs.class,
+        PinpointClient.class
 })
-public class ApplicationConfig implements NaisApiApplication {
-
-    @Override
-    public boolean brukSTSHelsesjekk() {
-        return false;
-    }
+public class ApplicationConfig implements ApiApplication {
 
     @Override
     public String getContextPath() {

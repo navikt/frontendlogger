@@ -29,6 +29,10 @@ fasitResources:
     resourceType: applicationproperties
   - alias: loadbalancer:arbeidsplassen-frontendlogger
     resourceType: loadbalancerconfig
+  - alias: loadbalancer:person-frontendlogger
+    resourceType: loadbalancerconfig
+  - alias: loadbalancer:arbeidsgiver-frontendlogger
+    resourceType: loadbalancerconfig
   exposed:
   - alias: frontendloggerSbsApi
     resourceType: restservice
