@@ -1,4 +1,5 @@
 .idea/*
+!.idea/runConfigurations
 src/frontend/node_modules/
 *.iml
 
