@@ -60,8 +60,8 @@ window.addEventListener('load',function() {
 });
 
 function reportInitialLoad() {
-    const navEntry = window.performance.getEntriesByType('navigation')[0];
-    if(navEntry && navEntry.loadEventEnd > 0) {
+    const navEntry = window.performance && window.performance.getEntriesByType ? window.performance.getEntriesByType('navigation')[0] : undefined;
+    if (navEntry && navEntry.loadEventEnd > 0) {
         // https://w3c.github.io/navigation-timing/#processing-model
         const loadTime = navEntry.loadEventEnd - navEntry.fetchStart;
         logPerformance(loadTime)
