@@ -29,7 +29,7 @@ fasitResources:
     resourceType: applicationproperties
   - alias: loadbalancer:arbeidsplassen-frontendlogger
     resourceType: loadbalancerconfig
-  - alias: loadbalancer:person-frontendlogger
+  - alias: loadbalancer:nav.no-frontendlogger
     resourceType: loadbalancerconfig
   - alias: loadbalancer:arbeidsgiver-frontendlogger
     resourceType: loadbalancerconfig
