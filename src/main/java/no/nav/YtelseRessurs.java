@@ -11,6 +11,7 @@ import javax.ws.rs.Path;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import static java.util.Optional.ofNullable;
 import static no.nav.OriginApplicationNameResolver.resolveApplicationName;
 
 @Component
@@ -27,9 +28,11 @@ public class YtelseRessurs {
     public void registrerSidelast(Map<String, Object> logMsg) {
         Number pageLoadTime = (Number) logMsg.get(PAGE_LOAD_TIME_ATTRIBUTE);
 
+        String userAgent = ofNullable(logMsg.get("userAgent")).map(Object::toString).orElse("unknown");
+
         meterRegistry.timer("page_load_time",
-                "origin_app",
-                resolveApplicationName(logMsg)
+                "origin_app", resolveApplicationName(logMsg),
+                "user_agent", userAgent
         ).record(pageLoadTime.longValue(), TimeUnit.MILLISECONDS);
 
         log.info(Markers.appendEntries(logMsg), null);
