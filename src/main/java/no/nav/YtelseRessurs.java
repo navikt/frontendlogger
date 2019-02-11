@@ -14,20 +14,23 @@ import java.util.concurrent.TimeUnit;
 import static no.nav.OriginApplicationNameResolver.resolveApplicationName;
 
 @Component
-@Path("/performance")
+@Path(YtelseRessurs.PATH)
 @Slf4j
 public class YtelseRessurs {
+
+    public static final String PATH = "/performance";
+    public static final String PAGE_LOAD_TIME_ATTRIBUTE = "pageLoadTime";
 
     private static final MeterRegistry meterRegistry = MetricsFactory.getMeterRegistry();
 
     @POST
     public void registrerSidelast(Map<String, Object> logMsg) {
-        long pageLoadTime = Math.round((double) logMsg.get("pageLoadTime"));
+        Number pageLoadTime = (Number) logMsg.get(PAGE_LOAD_TIME_ATTRIBUTE);
 
         meterRegistry.timer("page_load_time",
                 "origin_app",
                 resolveApplicationName(logMsg)
-        ).record(pageLoadTime, TimeUnit.MILLISECONDS);
+        ).record(pageLoadTime.longValue(), TimeUnit.MILLISECONDS);
 
         log.info(Markers.appendEntries(logMsg), null);
     }
