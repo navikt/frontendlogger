@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import static no.nav.OriginApplicationNameResolver.resolveApplicationName;
+import static no.nav.BrowserResolver.resolveBrowser;
 
 @Component
 @Path(YtelseRessurs.PATH)
@@ -27,9 +28,11 @@ public class YtelseRessurs {
     public void registrerSidelast(Map<String, Object> logMsg) {
         Number pageLoadTime = (Number) logMsg.get(PAGE_LOAD_TIME_ATTRIBUTE);
 
+
+
         meterRegistry.timer("page_load_time",
-                "origin_app",
-                resolveApplicationName(logMsg)
+                "origin_app", resolveApplicationName(logMsg),
+                "browser", resolveBrowser(logMsg)
         ).record(pageLoadTime.longValue(), TimeUnit.MILLISECONDS);
 
         log.info(Markers.appendEntries(logMsg), null);
