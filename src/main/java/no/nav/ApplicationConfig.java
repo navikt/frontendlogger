@@ -11,7 +11,8 @@ import org.springframework.context.annotation.Import;
         MetrikkRessurs.class,
         LoggRessurs.class,
         YtelseRessurs.class,
-        PinpointClient.class
+        PinpointClient.class,
+        RateLimiterFilter.class
 })
 public class ApplicationConfig implements ApiApplication {
 
