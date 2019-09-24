@@ -34,7 +34,8 @@ window.onerror = function (message, url, line, column, error) {
         jsFileUrl: url,
         lineNumber: line,
         column: column,
-        messageIndexed: message
+        messageIndexed: message,
+        error,
     };
 
     if (error) {
