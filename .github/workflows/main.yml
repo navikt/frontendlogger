@@ -59,6 +59,6 @@ jobs:
         uses: nais/deploy/actions/deploy@v1
         if: github.ref == 'refs/heads/dev'
         env:
-          CLUSTER: dev-fss
+          CLUSTER: dev-sbs
           RESOURCE: nais-q-sbs.yaml
           VAR: version=${{ github.sha }},namespace=q0
