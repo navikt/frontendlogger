@@ -1,6 +1,6 @@
 name: Test, build, push and deploy
 
-on: push
+on: [push]
 
 env:
   IMAGE: docker.pkg.github.com/${{ github.repository }}/frontendlogger:${{ github.sha }}
