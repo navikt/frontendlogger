@@ -6,7 +6,6 @@ env:
   IMAGE: docker.pkg.github.com/${{ github.repository }}/frontendlogger:${{ github.sha }}
 
 jobs:
-
   build:
     name: CI/CD pipeline
     runs-on: ubuntu-latest
@@ -29,6 +28,7 @@ jobs:
   deploy-q0-fss:
     if: github.ref == 'refs/heads/dev'
     needs: build
+    runs-on: ubuntu-latest
     env:
       APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
       PRINT_PAYLOAD: true
@@ -47,6 +47,7 @@ jobs:
   deploy-q0-sbs:
     if: github.ref == 'refs/heads/dev'
     needs: build
+    runs-on: ubuntu-latest
     env:
       APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
       PRINT_PAYLOAD: true
