@@ -14,10 +14,10 @@ spec:
   port: 8080
   liveness:
     path: frontendlogger/internal/isAlive
-    initialDelay: 60
+    initialDelay: 120
   readiness:
     path: frontendlogger/internal/isReady
-    initialDelay: 60
+    initialDelay: 120
   prometheus:
     enabled: true
     path: frontendlogger/internal/metrics
