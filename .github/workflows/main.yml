@@ -25,8 +25,7 @@ jobs:
           docker login docker.pkg.github.com -u ${GITHUB_REPOSITORY} -p ${GITHUB_TOKEN}
           docker push ${IMAGE}
 
-
-  Deploy q0-fss:
+  deploy-q0-fss:
     if: github.ref == 'refs/heads/dev'
     needs: build
     runs-on: ubuntu-latest
@@ -44,8 +43,7 @@ jobs:
           RESOURCE: nais-q-fss.yaml
           VAR: version=${{ github.sha }},namespace=q0
 
-
-  Deploy q0-sbs:
+  deploy-q0-sbs:
     if: github.ref == 'refs/heads/dev'
     needs: build
     runs-on: ubuntu-latest
@@ -63,7 +61,7 @@ jobs:
           RESOURCE: nais-q-sbs.yaml
           VAR: version=${{ github.sha }},namespace=q0
 
-  Deploy prod-fss:
+  deploy-prod-fss:
     if: github.ref == 'refs/heads/master'
     needs: build
     runs-on: ubuntu-latest
@@ -79,7 +77,7 @@ jobs:
           RESOURCE: nais-fss.yaml
           VAR: version=${{ github.sha }}
 
-  Deploy prod-sbs:
+  deploy-prod-sbs:
     if: github.ref == 'refs/heads/master'
     needs: build
     runs-on: ubuntu-latest
