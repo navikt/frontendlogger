@@ -4,6 +4,7 @@ on: [push]
 
 env:
   IMAGE: docker.pkg.github.com/${{ github.repository }}/frontendlogger:${{ github.sha }}
+  TZ: Europe/Amsterdam
 
 jobs:
   build:
