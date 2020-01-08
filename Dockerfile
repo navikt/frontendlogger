@@ -1,16 +1,13 @@
-# gjør det mulig å bytte base-image slik at vi får bygd både innenfor og utenfor NAV
-ARG BASE_IMAGE_PREFIX="docker.adeo.no:5000/pus/"
-
-FROM ${BASE_IMAGE_PREFIX}node as node-builder
-ADD /src/frontend /source
+FROM node:12.14.0-alpine as node-builder
+COPY /src/frontend /source
 WORKDIR /source
 RUN npm ci && npm run build
 
-FROM ${BASE_IMAGE_PREFIX}maven as builder
-ADD / /source
+FROM maven:3.6.3-jdk-8-slim as builder
+COPY / /source
 WORKDIR /source
 COPY --from=node-builder /source/build /source/src/main/webapp
-RUN mvn package -DskipTests
+RUN mvn package
 
-FROM ${BASE_IMAGE_PREFIX}nais-java-app
+FROM navikt/nais-java-app
 COPY --from=builder /source/target/frontendlogger /app

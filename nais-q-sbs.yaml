@@ -1,0 +1,34 @@
+kind: Application
+apiVersion: nais.io/v1alpha1
+metadata:
+  name: frontendlogger
+  namespace: {{namespace}}
+  labels:
+    team: pto
+  cluster: dev-sbs
+spec:
+  image: docker.pkg.github.com/navikt/frontendlogger/frontendlogger:{{version}}
+  ingresses:
+    - https://www-{{namespace}}.nav.no/frontendlogger
+    - https://frontendlogger-{{namespace}}.nais.oera-q.local
+  port: 8080
+  liveness:
+    path: frontendlogger/internal/isAlive
+    initialDelay: 20
+  readiness:
+    path: frontendlogger/internal/isReady
+    initialDelay: 20
+  prometheus:
+    enabled: true
+    path: frontendlogger/internal/metrics
+  replicas:
+    min: 2
+    max: 2
+    cpuThresholdPercentage: 50
+  resources:
+    limits:
+      cpu: "3"
+      memory: 768Mi
+    requests:
+      cpu: 200m
+      memory: 512Mi

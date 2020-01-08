@@ -1,0 +1,62 @@
+name: Test, build, push and deploy
+
+on: [push]
+
+env:
+  IMAGE: docker.pkg.github.com/${{ github.repository }}/frontendlogger:${{ github.sha }}
+
+jobs:
+
+  build:
+    name: CI/CD pipeline
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Build and push Docker image
+        run: |
+          docker build --tag ${IMAGE} .
+
+      - name: Push docker image
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        if: github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/master'
+        run: |
+          docker login docker.pkg.github.com -u ${GITHUB_REPOSITORY} -p ${GITHUB_TOKEN}
+          docker push ${IMAGE}
+
+
+  deploy-q0-fss:
+    if: github.ref == 'refs/heads/dev'
+    needs: build
+    env:
+      APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+      PRINT_PAYLOAD: true
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Deploy application to Q0 fss
+        uses: nais/deploy/actions/deploy@v1
+        if: github.ref == 'refs/heads/dev'
+        env:
+          CLUSTER: dev-fss
+          RESOURCE: nais-q-fss.yaml
+          VAR: version=${{ github.sha }},namespace=q0
+
+
+  deploy-q0-sbs:
+    if: github.ref == 'refs/heads/dev'
+    needs: build
+    env:
+      APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+      PRINT_PAYLOAD: true
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Deploy application to Q0 sbs
+        uses: nais/deploy/actions/deploy@v1
+        if: github.ref == 'refs/heads/dev'
+        env:
+          CLUSTER: dev-fss
+          RESOURCE: nais-q-sbs.yaml
+          VAR: version=${{ github.sha }},namespace=q0
