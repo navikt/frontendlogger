@@ -33,3 +33,6 @@ spec:
     requests:
       cpu: 200m
       memory: 512Mi
+  env:
+    - name: APP_ENVIRONMENT_NAME
+      value: p
