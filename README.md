@@ -37,3 +37,8 @@ window.frontendlogger.event(
     {'Tagnavn1':'TagVerdi1','Tagnavn2':'TagVerdi2'}
 );
 ```
+
+
+### Kontakt og spørsmål
+
+Opprett en issue i GitHub for eventuelle spørsmål.

@@ -25,7 +25,6 @@ jobs:
           docker login docker.pkg.github.com -u ${GITHUB_REPOSITORY} -p ${GITHUB_TOKEN}
           docker push ${IMAGE}
 
-
   deploy-q0-fss:
     if: github.ref == 'refs/heads/dev'
     needs: build
@@ -44,7 +43,6 @@ jobs:
           RESOURCE: nais-q-fss.yaml
           VAR: version=${{ github.sha }},namespace=q0
 
-
   deploy-q0-sbs:
     if: github.ref == 'refs/heads/dev'
     needs: build
@@ -59,6 +57,38 @@ jobs:
         uses: nais/deploy/actions/deploy@v1
         if: github.ref == 'refs/heads/dev'
         env:
-          CLUSTER: dev-fss
+          CLUSTER: dev-sbs
           RESOURCE: nais-q-sbs.yaml
           VAR: version=${{ github.sha }},namespace=q0
+
+  deploy-prod-fss:
+    if: github.ref == 'refs/heads/master'
+    needs: build
+    runs-on: ubuntu-latest
+    env:
+      APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+      PRINT_PAYLOAD: true
+    steps:
+      - uses: actions/checkout@v1
+      - name: Deploy application to prod fss
+        uses: nais/deploy/actions/deploy@v1
+        env:
+          CLUSTER: prod-fss
+          RESOURCE: nais-fss.yaml
+          VAR: version=${{ github.sha }}
+
+  deploy-prod-sbs:
+    if: github.ref == 'refs/heads/master'
+    needs: build
+    runs-on: ubuntu-latest
+    env:
+      APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+      PRINT_PAYLOAD: true
+    steps:
+      - uses: actions/checkout@v1
+      - name: Deploy application to prod sbs
+        uses: nais/deploy/actions/deploy@v1
+        env:
+          CLUSTER: prod-sbs
+          RESOURCE: nais-sbs.yaml
+          VAR: version=${{ github.sha }}
