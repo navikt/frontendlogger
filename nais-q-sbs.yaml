@@ -12,7 +12,7 @@ spec:
     - https://www-{{namespace}}.nav.no/frontendlogger
     - https://frontendlogger-{{namespace}}.nais.oera-q.local
     - https://tjenester-{{namespace}}.nav.no/frontendlogger
-    - https://arbeidsgiver.nav.no/frontendlogger
+    - https://arbeidsgiver-q.nav.no/frontendlogger
   port: 8080
   liveness:
     path: frontendlogger/internal/isAlive
