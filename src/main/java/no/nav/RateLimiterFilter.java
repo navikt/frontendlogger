@@ -17,7 +17,7 @@ public class RateLimiterFilter implements ContainerRequestFilter {
 
     static final String PATH_TO_LIMIT = "/frontendlogger/api/";
     static final int MAX_WAIT_TIME_IN_SECONDS = 2;
-    static RateLimiter rateLimiter = RateLimiter.create(50.0);
+    static RateLimiter rateLimiter = RateLimiter.create(100.0);
 
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
