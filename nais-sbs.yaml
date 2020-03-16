@@ -11,6 +11,7 @@ spec:
   ingresses:
     - https://www.nav.no/frontendlogger
     - https://frontendlogger.nais.oera-q.local
+    - https://tjenester.nav.no/frontendlogger
   port: 8080
   liveness:
     path: frontendlogger/internal/isAlive
@@ -23,7 +24,7 @@ spec:
     path: frontendlogger/internal/metrics
   replicas:
     min: 2
-    max: 2
+    max: 4
     cpuThresholdPercentage: 50
   resources:
     limits:
@@ -32,3 +33,6 @@ spec:
     requests:
       cpu: 200m
       memory: 512Mi
+  env:
+    - name: APP_ENVIRONMENT_NAME
+      value: p
