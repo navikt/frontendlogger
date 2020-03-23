@@ -59,14 +59,15 @@ public class LoggRessurs {
         ).increment();
 
         Object pinpoint = logMsg.get("pinpoint");
-        if (pinpoint != null) {
-            logMsg.remove("pinpoint");
-        }
-        
-        logToLogback(logLevel, logMsg);
 
-        if (pinpoint != null) {
-            pinpointClient.enrichErrorData(pinpoint, (enrichedError) -> logToLogback(logLevel, enrichedError));
+        if (pinpoint == null) {
+            logToLogback(logLevel, logMsg);
+        } else {
+            logMsg.remove("pinpoint");
+            pinpointClient.enrichErrorData(pinpoint, (enrichedError) -> {
+                logMsg.putAll(enrichedError);
+                logToLogback(logLevel, logMsg);
+            });
         }
     }
 
