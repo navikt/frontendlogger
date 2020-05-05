@@ -32,9 +32,10 @@ public class PinpointClient implements Helsesjekk {
             false
     );
 
-    public void enrichErrorData(Object errorData, Consumer<Map<String, Object>> callback) {
+    public void enrichErrorData(String appname, Object errorData, Consumer<Map<String, Object>> callback) {
         client.target(pinpointApiUrl)
                 .path("pinpoint")
+                .queryParam("appname", appname)
                 .request()
                 .async()
                 .post(json(errorData), new PinpointCallback(callback));
