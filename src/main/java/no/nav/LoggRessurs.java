@@ -49,11 +49,12 @@ public class LoggRessurs {
     @POST
     public void log(@PathParam("level") String level, Map<String, Object> logMsg) {
         Level logLevel = Level.valueOf(level.toUpperCase());
+        String appname = resolveApplicationName(logMsg);
 
         meterRegistry.counter(
                 "frontend_logger",
                 "origin_app",
-                resolveApplicationName(logMsg),
+                appname,
                 "level",
                 logLevel.name()
         ).increment();
@@ -64,7 +65,7 @@ public class LoggRessurs {
             logToLogback(logLevel, logMsg);
         } else {
             logMsg.remove("pinpoint");
-            pinpointClient.enrichErrorData(pinpoint, (enrichedError) -> {
+            pinpointClient.enrichErrorData(appname, pinpoint, (enrichedError) -> {
                 logMsg.putAll(enrichedError);
                 logToLogback(logLevel, logMsg);
             });
