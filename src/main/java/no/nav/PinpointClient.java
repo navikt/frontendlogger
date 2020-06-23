@@ -25,6 +25,7 @@ public class PinpointClient implements Helsesjekk {
 
     private final String pinpointApplicationName = requireApplicationName().contains("-fss") ? "pinpoint-fss" : "pinpoint";
     private final String pinpointApiUrl = getOptionalProperty("PINPOINT_BASE_URL").orElseGet(() -> UrlUtils.clusterUrlForApplication(pinpointApplicationName)) + "/pinpoint/api";
+    private final String pinpointIsAliveUrl = getOptionalProperty("PINPOINT_BASE_URL").orElseGet(() -> UrlUtils.clusterUrlForApplication(pinpointApplicationName)) + "/pinpoint/internal/isAlive";
     private final HelsesjekkMetadata helsesjekkMetadata = new HelsesjekkMetadata(
             "pinpoint",
             pinpointApiUrl,
@@ -43,7 +44,7 @@ public class PinpointClient implements Helsesjekk {
 
     @Override
     public void helsesjekk() {
-        if (client.target(pinpointApiUrl).path("ping").request().get().getStatus() != 200) {
+        if (client.target(pinpointIsAliveUrl).request().get().getStatus() != 200) {
             throw new IllegalStateException();
         }
     }
