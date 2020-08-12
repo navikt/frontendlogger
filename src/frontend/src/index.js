@@ -1,7 +1,7 @@
 const serializError = require('serialize-error');
 const api = require('./api');
 
-const apiUrl = '/frontendlogger/api/';
+const apiUrl = api.getApiUrl();
 const appname = window.frontendlogger.appname;
 const oldOnError = window.onerror;
 
