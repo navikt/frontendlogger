@@ -10,7 +10,7 @@ spec:
   image: docker.pkg.github.com/navikt/frontendlogger/frontendlogger:{{version}}
   ingresses:
     - https://www.nav.no/frontendlogger
-    - https://frontendlogger.nais.oera-q.local
+    - https://frontendlogger.nais.oera.no
     - https://tjenester.nav.no/frontendlogger
   port: 8080
   liveness:
@@ -36,3 +36,5 @@ spec:
   env:
     - name: APP_ENVIRONMENT_NAME
       value: p
+    - name: "cors.allowed.origins"
+      value: ".nav.no"
