@@ -23,8 +23,8 @@ public class MetrikkRessurs {
          Legg på namespace og cluster for å gjøre migreringen til versjon 2 av metrics modulen litt enklere.
          Versjon 2 legger på dette automatisk, så koden under kan fjernes når vi oppgraderer frontendloggeren.
         */
-        event.getTags().putIfAbsent("namespace", EnvironmentUtils.getNamespace().orElse("NO_NAMESPACE"));
-        event.getTags().putIfAbsent("cluster", EnvironmentUtils.getClusterName().orElse("NO_CLUSTER"));
+        newEvent.addTagToReport("namespace", EnvironmentUtils.getNamespace().orElse("NO_NAMESPACE"));
+        newEvent.addTagToReport("cluster", EnvironmentUtils.getClusterName().orElse("NO_CLUSTER"));
 
         newEvent.report();
     }
