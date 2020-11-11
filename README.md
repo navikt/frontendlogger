@@ -5,6 +5,9 @@ alle applikasjoner kan bruke.
 
 ### Eksempel på bruk:
 
+
+#### Via script-tag
+
 De to følgende script-tagene må legges til i index.html
 Førstnevnte gir en fallback slik at applikasjonen din ikke feiler om frontendloggeren skulle være nede, og spesifiserer `appname` som skal brukes.
 Funksjonene definert i `window.frontendlogger` blir overskrevet scriptet blir lastet inn.
@@ -38,7 +41,7 @@ window.frontendlogger.event(
 );
 ```
 
-### Typescript
+**Typescript**
 Om man bruker typescript og vil ha med typesikkerheten derifra kan man bruke denne;
 ```typescript
 declare global {
@@ -55,7 +58,37 @@ declare global {
 }
 ```
 
-Andre steder i koden kan man så bruke `window.frontendlogger.info("Fin melding");`
+#### Via npm-modul
+
+Installer: `npm install @navikt/frontendlogger --save` 
+
+Bruk:
+```typescript
+import {
+	createFrontendLogger,
+	createMockFrontendLogger,
+	DEFAULT_FRONTENDLOGGER_API_URL,
+    setUpErrorReporting
+} from '@navikt/frontendlogger';
+
+export const logger = createFrontendLogger('my-app-name', DEFAULT_FRONTENDLOGGER_API_URL);
+//export const logger = createMockFrontendLogger('my-app-name');
+
+// Logging 
+logger.info('Info');
+logger.warn('Warn');
+logger.error('Error');
+
+// Metrics
+logger.event('navn-pa-metrikk', { field1: 'value1' }, { tag1: 'value2' });
+
+// Log errors with window.onerror
+setUpErrorReporting(logger);
+```
+
+**NB** `setUpErrorReporting` bør kalles så tidlig som mulig siden dette setter opp den globale error-håndteringen  
+
+
 
 ### Kontakt og spørsmål
 
