@@ -1,6 +1,6 @@
 {
   "name": "@navikt/frontendlogger",
-  "version": "1.0.2",
+  "version": "2.0.0",
   "description": "Bibliotek for å integrere mot frontendlogger",
   "main": "src/index.ts",
   "scripts": {

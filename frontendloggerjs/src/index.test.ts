@@ -2,7 +2,7 @@ require('jsdom-global')();
 import { createFrontendLogger, setUpErrorReporting } from './index';
 
 test('creates correct request for arbitrary data', () => {
-	const logger = createFrontendLogger('/api/test', 'test');
+	const logger = createFrontendLogger('test', '/api/test');
 
 	const mockFetch = jest.fn((input: RequestInfo, init?: RequestInit) => Promise.resolve());
 
@@ -20,27 +20,22 @@ test('creates correct request for arbitrary data', () => {
 		"method": "POST"
 	});
 
-	logger.info(['test1', 'test2']);
+	logger.info({ message: 'message1', data: ['test1', 'test2'] });
 
 	expect(mockFetch.mock.calls[1][0]).toBe('/api/test/info');
 
-	expect(mockFetch.mock.calls[1][1]).toStrictEqual({
-		"body": "{\"values\":[\"test1\",\"test2\"],\"url\":\"about:blank\",\"userAgent\":\"Mozilla/5.0 (darwin) AppleWebKit/537.36 (KHTML, like Gecko) jsdom/16.4.0\",\"appname\":\"test\"}",
-		"credentials": "same-origin",
-		"headers": {"Content-Type": "application/json", "Nav-Consumer-Id": "test"},
-		"method": "POST"
-	});
+	expect(mockFetch.mock.calls[1][1]).toStrictEqual({"body": "{\"message\":\"message1\",\"data\":[\"test1\",\"test2\"],\"url\":\"about:blank\",\"userAgent\":\"Mozilla/5.0 (darwin) AppleWebKit/537.36 (KHTML, like Gecko) jsdom/16.4.0\",\"appname\":\"test\"}", "credentials": "same-origin", "headers": {"Content-Type": "application/json", "Nav-Consumer-Id": "test"}, "method": "POST"});
 
-	logger.info({value1: 'test', value2: true});
+	logger.info({ message: 'message2', value1: 'test', value2: true });
 
 	expect(mockFetch.mock.calls[2][0]).toBe('/api/test/info');
 
-	expect(mockFetch.mock.calls[2][1]).toStrictEqual({"body": "{\"value1\":\"test\",\"value2\":true,\"url\":\"about:blank\",\"userAgent\":\"Mozilla/5.0 (darwin) AppleWebKit/537.36 (KHTML, like Gecko) jsdom/16.4.0\",\"appname\":\"test\"}", "credentials": "same-origin", "headers": {"Content-Type": "application/json", "Nav-Consumer-Id": "test"}, "method": "POST"});
+	expect(mockFetch.mock.calls[2][1]).toStrictEqual({"body": "{\"message\":\"message2\",\"value1\":\"test\",\"value2\":true,\"url\":\"about:blank\",\"userAgent\":\"Mozilla/5.0 (darwin) AppleWebKit/537.36 (KHTML, like Gecko) jsdom/16.4.0\",\"appname\":\"test\"}", "credentials": "same-origin", "headers": {"Content-Type": "application/json", "Nav-Consumer-Id": "test"}, "method": "POST"});
 
 });
 
 test('creates correct request for error/warn', () => {
-	const logger = createFrontendLogger('/api/test', 'test');
+	const logger = createFrontendLogger('test', '/api/test');
 
 	const mockFetch = jest.fn((input: RequestInfo, init?: RequestInit) => Promise.resolve());
 
@@ -48,18 +43,18 @@ test('creates correct request for error/warn', () => {
 	global.fetch = mockFetch;
 
 
-	logger.error({value1: 'test', value2: true});
+	logger.error({message: 'error', value1: 'test', value2: true});
 
 	expect(mockFetch.mock.calls[0][0]).toBe('/api/test/error');
 
 
-	logger.warn({value1: 'test', value2: true});
+	logger.warn({message: 'error', value1: 'test', value2: true});
 
 	expect(mockFetch.mock.calls[1][0]).toBe('/api/test/warn');
 });
 
 test('creates correct request for event', () => {
-	const logger = createFrontendLogger('/api/test/', 'test-app');
+	const logger = createFrontendLogger('test-app', '/api/test/');
 
 	const mockFetch = jest.fn((input: RequestInfo, init?: RequestInit) => Promise.resolve());
 

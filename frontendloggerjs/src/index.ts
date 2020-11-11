@@ -1,13 +1,14 @@
 import { serializeError } from 'serialize-error';
 
+type Object = { [k: string]: any };
+type LogData = string | { message: string, [key: string]: any };
+
 interface FrontendLogger {
-	info: (data: any) => void;
-	warn: (data: any) => void;
-	error: (data: any) => void;
+	info: (data: LogData) => void;
+	warn: (data: LogData) => void;
+	error: (data: LogData) => void;
 	event: (name: string, fields?: Object, tags?: Object) => void;
 }
-
-type Object = { [k: string]: any };
 
 enum LogLevel {
 	INFO = 'info',
@@ -17,7 +18,7 @@ enum LogLevel {
 
 export const DEFAULT_FRONTENDLOGGER_API_URL = '/frontendlogger/api'
 
-export function createFrontendLogger(apiUrl: string, appName: string): FrontendLogger {
+export function createFrontendLogger(appName: string, apiUrl: string): FrontendLogger {
 	return {
 		info: createLogger(apiUrl, appName, LogLevel.INFO),
 		warn: createLogger(apiUrl, appName, LogLevel.WARN),
@@ -35,12 +36,12 @@ export function createMockFrontendLogger(appName: string): FrontendLogger {
 	};
 }
 
-export function setUpErrorReporting(logger: { error: (data: any) => void }) {
+export function setUpErrorReporting(logger: { error: (data: LogData) => void }) {
 	const oldOnError = window.onerror;
 
 	window.onerror = function (message, url, line, column, error) {
-		const json: Object = {
-			message: message,
+		const json: LogData = {
+			message: message.toString(),
 			jsFileUrl: url,
 			lineNumber: line,
 			column: column,
@@ -66,19 +67,15 @@ export function setUpErrorReporting(logger: { error: (data: any) => void }) {
 	};
 }
 
-function objectifyData(data: any): Object {
-	if (Array.isArray(data)) {
-		return { values: data };
-	} else if (typeof data === 'object') {
+function objectifyData(data: LogData): Object {
+	if (typeof data === 'object') {
 		return data;
-	} else if (typeof data === 'string') {
-		return { message: data };
-	} else {
-		return { value: data };
 	}
+
+	return { message: data };
 }
 
-function enrichData(data: object, appName: string): Object {
+function enrichData(data: Object, appName: string): Object {
 	const additionalData = {
 		url: window.location.href,
 		userAgent: window.navigator.userAgent,
@@ -88,8 +85,8 @@ function enrichData(data: object, appName: string): Object {
 	return Object.assign({}, data, additionalData);
 }
 
-function createLogger(apiUrl: string, appName: string, level: LogLevel): (data: any) => void {
-	return (data: any) => {
+function createLogger(apiUrl: string, appName: string, level: LogLevel): (data: LogData) => void {
+	return (data: LogData) => {
 		const url = joinPaths(apiUrl, level);
 		const enrichedData = enrichData(objectifyData(data), appName);
 
@@ -97,8 +94,8 @@ function createLogger(apiUrl: string, appName: string, level: LogLevel): (data: 
 	};
 }
 
-function createMockLogger(appName: string, level: LogLevel): (data: any) => void {
-	return (data: any) => {
+function createMockLogger(appName: string, level: LogLevel): (data: LogData) => void {
+	return (data: LogData) => {
 		const enrichedData = enrichData(objectifyData(data), appName);
 		console.log('Log: ' + level, enrichedData);
 	};
