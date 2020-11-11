@@ -38,6 +38,24 @@ window.frontendlogger.event(
 );
 ```
 
+### Typescript
+Om man bruker typescript og vil ha med typesikkerheten derifra kan man bruke denne;
+```typescript
+declare global {
+    type Data = string | { message: string, [key: string]: any };
+    type Extra = { [key: string]: any };
+    interface Window {
+        frontendlogger: {
+            info(data: Data): void;
+            warn(data: Data): void;
+            error(data: Data): void;
+            event(name: string, fields?: Extra, tags?: Extra): void;
+        }
+    }
+}
+```
+
+Andre steder i koden kan man så bruke `window.frontendlogger.info("Fin melding");`
 
 ### Kontakt og spørsmål
 
