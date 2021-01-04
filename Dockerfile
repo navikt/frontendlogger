@@ -9,5 +9,5 @@ WORKDIR /source
 COPY --from=node-builder /source/build /source/src/main/webapp
 RUN mvn package
 
-FROM navikt/pus-nais-java-app
+FROM docker.pkg.github.com/navikt/pus-nais-java-app/pus-nais-java-app:java8
 COPY --from=builder /source/target/frontendlogger /app

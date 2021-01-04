@@ -13,16 +13,12 @@ jobs:
     steps:
       - uses: actions/checkout@v1
 
-      - name: Build docker image
-        run: |
-          docker build --tag ${IMAGE} .
-
-      - name: Push docker image
+      - name: Build and push docker image
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        if: github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/master'
         run: |
-          docker login docker.pkg.github.com -u ${GITHUB_REPOSITORY} -p ${GITHUB_TOKEN}
+          echo ${GITHUB_TOKEN} | docker login docker.pkg.github.com -u ${GITHUB_REPOSITORY} --password-stdin
+          docker build --tag ${IMAGE} .
           docker push ${IMAGE}
 
   deploy-q0-fss:
