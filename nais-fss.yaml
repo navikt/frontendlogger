@@ -36,3 +36,5 @@ spec:
   env:
     - name: APP_ENVIRONMENT_NAME
       value: p
+    - name: CORS_ALLOWED_ORIGINS
+      value: ".adeo.no"
