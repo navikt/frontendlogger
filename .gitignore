@@ -8,3 +8,6 @@ target/
 *.log
 src/main/webapp/logger.js*
 src/frontend/build
+
+frontendloggerjs/node_modules
+frontendloggerjs/lib
