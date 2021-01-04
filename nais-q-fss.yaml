@@ -34,3 +34,6 @@ spec:
     requests:
       cpu: 200m
       memory: 512Mi
+  env:
+    - name: CORS_ALLOWED_ORIGINS
+      value: ".adeo.no"
