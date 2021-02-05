@@ -18,8 +18,8 @@
     "serialize-error": "^2.1.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.0.0-rc.3",
-    "@babel/preset-env": "^7.0.0-rc.3",
+    "@babel/core": "^7.10.5",
+    "@babel/preset-env": "^7.10.4",
     "babelify": "^9.0.0",
     "browserify": "^16.5.1",
     "uglify-js": "^3.4.8"

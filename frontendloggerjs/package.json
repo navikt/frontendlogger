@@ -1,0 +1,38 @@
+{
+  "name": "@navikt/frontendlogger",
+  "version": "2.0.0",
+  "description": "Bibliotek for å integrere mot frontendlogger",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "jest",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/navikt/frontendlogger.git"
+  },
+  "files": [
+    "lib/**/*"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "author": "NAV",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/navikt/frontendlogger/issues"
+  },
+  "homepage": "https://github.com/navikt/frontendlogger#readme",
+  "devDependencies": {
+    "@types/jest": "^26.0.15",
+    "@types/serialize-error": "^4.0.1",
+    "jest": "^26.6.3",
+    "jsdom": "^16.4.0",
+    "jsdom-global": "^3.0.2",
+    "ts-jest": "^26.4.4",
+    "typescript": "^4.0.5"
+  },
+  "dependencies": {
+    "serialize-error": "^7.0.1"
+  }
+}

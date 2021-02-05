@@ -11,6 +11,7 @@ spec:
   ingresses:
     - https://frontendlogger-{{namespace}}.nais.adeo.no
     - https://app-{{namespace}}.adeo.no/frontendlogger
+    - https://app-{{namespace}}.dev.adeo.no/frontendlogger
     - https://modapp-{{namespace}}.adeo.no/frontendlogger
   port: 8080
   liveness:
@@ -23,9 +24,9 @@ spec:
     enabled: true
     path: frontendlogger/internal/metrics
   replicas:
-    min: 2
+    min: 1
     max: 2
-    cpuThresholdPercentage: 50
+    cpuThresholdPercentage: 75
   resources:
     limits:
       cpu: "3"
@@ -33,3 +34,6 @@ spec:
     requests:
       cpu: 200m
       memory: 512Mi
+  env:
+    - name: CORS_ALLOWED_ORIGINS
+      value: ".adeo.no"

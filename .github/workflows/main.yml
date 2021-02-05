@@ -13,16 +13,12 @@ jobs:
     steps:
       - uses: actions/checkout@v1
 
-      - name: Build docker image
-        run: |
-          docker build --tag ${IMAGE} .
-
-      - name: Push docker image
+      - name: Build and push docker image
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        if: github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/master'
         run: |
-          docker login docker.pkg.github.com -u ${GITHUB_REPOSITORY} -p ${GITHUB_TOKEN}
+          echo ${GITHUB_TOKEN} | docker login docker.pkg.github.com -u ${GITHUB_REPOSITORY} --password-stdin
+          docker build --tag ${IMAGE} .
           docker push ${IMAGE}
 
   deploy-q0-fss:
@@ -34,7 +30,6 @@ jobs:
       PRINT_PAYLOAD: true
     steps:
       - uses: actions/checkout@v1
-
       - name: Deploy application to Q0 fss
         uses: nais/deploy/actions/deploy@v1
         if: github.ref == 'refs/heads/dev'
@@ -42,6 +37,23 @@ jobs:
           CLUSTER: dev-fss
           RESOURCE: nais-q-fss.yaml
           VAR: version=${{ github.sha }},namespace=q0
+
+  deploy-q1-fss:
+    if: github.ref == 'refs/heads/dev'
+    needs: build
+    runs-on: ubuntu-latest
+    env:
+      APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+      PRINT_PAYLOAD: true
+    steps:
+      - uses: actions/checkout@v1
+      - name: Deploy application to Q1 fss
+        uses: nais/deploy/actions/deploy@v1
+        if: github.ref == 'refs/heads/dev'
+        env:
+          CLUSTER: dev-fss
+          RESOURCE: nais-q-fss.yaml
+          VAR: version=${{ github.sha }},namespace=q1
 
   deploy-q0-sbs:
     if: github.ref == 'refs/heads/dev'
@@ -52,7 +64,6 @@ jobs:
       PRINT_PAYLOAD: true
     steps:
       - uses: actions/checkout@v1
-
       - name: Deploy application to Q0 sbs
         uses: nais/deploy/actions/deploy@v1
         if: github.ref == 'refs/heads/dev'
