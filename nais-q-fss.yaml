@@ -13,7 +13,6 @@ spec:
     - https://app-{{namespace}}.adeo.no/frontendlogger
     - https://app-{{namespace}}.dev.adeo.no/frontendlogger
     - https://modapp-{{namespace}}.adeo.no/frontendlogger
-    - https://modia-{{namespace}}.dev.adeo.no/frontendlogger
   port: 8080
   liveness:
     path: frontendlogger/internal/isAlive
