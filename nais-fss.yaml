@@ -12,7 +12,6 @@ spec:
     - https://frontendlogger.nais.adeo.no
     - https://app.adeo.no/frontendlogger
     - https://modapp.adeo.no/frontendlogger
-    - https://modia.adeo.no/frontendlogger
   port: 8080
   liveness:
     path: frontendlogger/internal/isAlive
