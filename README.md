@@ -5,7 +5,6 @@ alle applikasjoner kan bruke.
 
 ### Eksempel på bruk:
 
-
 #### Via script-tag
 
 De to følgende script-tagene må legges til i index.html
