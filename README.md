@@ -92,3 +92,4 @@ setUpErrorReporting(logger);
 ### Kontakt og spørsmål
 
 Opprett en issue i GitHub for eventuelle spørsmål.
+
