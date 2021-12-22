@@ -93,3 +93,4 @@ setUpErrorReporting(logger);
 
 Opprett en issue i GitHub for eventuelle spørsmål.
 
+
