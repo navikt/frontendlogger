@@ -1,9 +1,9 @@
-package no.nav;
+package no.nav.frontendlogger;
 
 import java.util.Map;
 
 import static java.util.Optional.ofNullable;
-import static no.nav.sbl.util.EnvironmentUtils.getOptionalProperty;
+import static no.nav.common.utils.EnvironmentUtils.getOptionalProperty;
 
 public class OriginApplicationNameResolver {
 

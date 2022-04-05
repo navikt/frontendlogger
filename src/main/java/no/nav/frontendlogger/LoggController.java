@@ -1,30 +1,28 @@
-package no.nav;
+package no.nav.frontendlogger;
 
 import io.micrometer.core.instrument.MeterRegistry;
-import no.nav.metrics.MetricsFactory;
 import org.slf4j.Logger;
 import org.slf4j.Marker;
 import org.slf4j.event.Level;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.inject.Inject;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiConsumer;
 
 import static net.logstash.logback.marker.Markers.appendEntries;
-import static no.nav.OriginApplicationNameResolver.resolveApplicationName;
+import static no.nav.frontendlogger.OriginApplicationNameResolver.resolveApplicationName;
 import static org.slf4j.LoggerFactory.getLogger;
 
-@Component
-@Path("/{level}")
-public class LoggRessurs {
+@RestController
+@RequestMapping("/{level}")
+public class LoggController {
 
-    private static final Logger LOG = getLogger(LoggRessurs.class);
-    private static final MeterRegistry meterRegistry = MetricsFactory.getMeterRegistry();
+    private static final Logger LOG = getLogger(LoggController.class);
 
     private static final Map<Level, BiConsumer<Marker, String>> logMap;
 
@@ -38,16 +36,18 @@ public class LoggRessurs {
         logMap.put(Level.ERROR, LOG::error);
     }
 
-
     private final PinpointClient pinpointClient;
+    private final MeterRegistry meterRegistry;
 
-    @Inject
-    public LoggRessurs(PinpointClient pinpointClient) {
+    @Autowired
+    public LoggController(PinpointClient pinpointClient,
+                          MeterRegistry meterRegistry) {
         this.pinpointClient = pinpointClient;
+        this.meterRegistry = meterRegistry;
     }
 
-    @POST
-    public void log(@PathParam("level") String level, Map<String, Object> logMsg) {
+    @PostMapping
+    public void log(@PathVariable("level") String level, Map<String, Object> logMsg) {
         Level logLevel = Level.valueOf(level.toUpperCase());
         String appname = resolveApplicationName(logMsg);
 

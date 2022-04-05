@@ -1,4 +1,4 @@
-package no.nav;
+package no.nav.frontendlogger;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;

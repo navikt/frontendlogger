@@ -1,34 +1,37 @@
-package no.nav;
+package no.nav.frontendlogger;
 
 import io.micrometer.core.instrument.MeterRegistry;
 import lombok.extern.slf4j.Slf4j;
 import net.logstash.logback.marker.Markers;
-import no.nav.metrics.MetricsFactory;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import static no.nav.OriginApplicationNameResolver.resolveApplicationName;
-import static no.nav.BrowserResolver.resolveBrowser;
+import static no.nav.frontendlogger.OriginApplicationNameResolver.resolveApplicationName;
+import static no.nav.frontendlogger.BrowserResolver.resolveBrowser;
 
-@Component
-@Path(YtelseRessurs.PATH)
+@RestController
+@RequestMapping(YtelseController.PATH)
 @Slf4j
-public class YtelseRessurs {
+public class YtelseController {
 
     public static final String PATH = "/performance";
     public static final String PAGE_LOAD_TIME_ATTRIBUTE = "pageLoadTime";
 
-    private static final MeterRegistry meterRegistry = MetricsFactory.getMeterRegistry();
+    private final MeterRegistry meterRegistry;
 
-    @POST
+    @Autowired
+    public YtelseController(MeterRegistry meterRegistry) {
+        this.meterRegistry = meterRegistry;
+    }
+
+    @PostMapping
     public void registrerSidelast(Map<String, Object> logMsg) {
         Number pageLoadTime = (Number) logMsg.get(PAGE_LOAD_TIME_ATTRIBUTE);
-
-
 
         meterRegistry.timer("page_load_time",
                 "origin_app", resolveApplicationName(logMsg),

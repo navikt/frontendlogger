@@ -1,8 +1,9 @@
-package no.nav;
+package no.nav.frontendlogger;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import no.nav.frontendlogger.Event;
 import org.junit.Test;
 
 import java.io.IOException;

@@ -1,18 +1,17 @@
-import no.nav.ApplicationConfig;
-import no.nav.apiapp.ApiApp;
-import no.nav.sbl.util.EnvironmentUtils;
+package no.nav.frontendlogger;
 
-import static no.nav.apiapp.rest.NavCorsFilter.CORS_ALLOWED_HEADERS;
-import static no.nav.apiapp.rest.NavCorsFilter.CORS_ALLOWED_ORIGINS;
-import static no.nav.sbl.util.EnvironmentUtils.getOptionalProperty;
-import static no.nav.sbl.util.EnvironmentUtils.setProperty;
+import no.nav.common.utils.SslUtils;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+@SpringBootApplication
 public class Main {
     public static void main(String... args) throws Exception {
-        setupCors();
-        ApiApp.runApp(ApplicationConfig.class, args);
+        SslUtils.setupTruststore();
+//        setupCors();
+        SpringApplication.run(Main.class, args);
     }
-
+/*
     private static void setupCors() {
         setProperty(CORS_ALLOWED_HEADERS, ALLOWED_HEADERS, EnvironmentUtils.Type.PUBLIC);
         getOptionalProperty("CORS_ALLOWED_ORIGINS")
@@ -25,5 +24,5 @@ public class Main {
             "Content-Language",
             "Content-Type",
             "Nav-Consumer-Id"
-    );
+    );*/
 }
