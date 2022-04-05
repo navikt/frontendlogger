@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.logstash.logback.marker.Markers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,11 +16,10 @@ import static no.nav.frontendlogger.OriginApplicationNameResolver.resolveApplica
 import static no.nav.frontendlogger.BrowserResolver.resolveBrowser;
 
 @RestController
-@RequestMapping(YtelseController.PATH)
+@RequestMapping("/api/performance")
 @Slf4j
 public class YtelseController {
 
-    public static final String PATH = "/performance";
     public static final String PAGE_LOAD_TIME_ATTRIBUTE = "pageLoadTime";
 
     private final MeterRegistry meterRegistry;
@@ -30,7 +30,7 @@ public class YtelseController {
     }
 
     @PostMapping
-    public void registrerSidelast(Map<String, Object> logMsg) {
+    public void registrerSidelast(@RequestBody Map<String, Object> logMsg) {
         Number pageLoadTime = (Number) logMsg.get(PAGE_LOAD_TIME_ATTRIBUTE);
 
         meterRegistry.timer("page_load_time",

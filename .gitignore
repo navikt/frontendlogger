@@ -6,7 +6,7 @@ src/frontend/node_modules/
 target/
 
 *.log
-src/main/webapp/logger.js*
+src/main/resources/static/logger.js*
 src/frontend/build
 
 frontendloggerjs/node_modules

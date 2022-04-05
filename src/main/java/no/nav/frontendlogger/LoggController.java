@@ -5,8 +5,8 @@ import org.slf4j.Logger;
 import org.slf4j.Marker;
 import org.slf4j.event.Level;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,7 +19,7 @@ import static no.nav.frontendlogger.OriginApplicationNameResolver.resolveApplica
 import static org.slf4j.LoggerFactory.getLogger;
 
 @RestController
-@RequestMapping("/{level}")
+@RequestMapping("/api")
 public class LoggController {
 
     private static final Logger LOG = getLogger(LoggController.class);
@@ -46,9 +46,32 @@ public class LoggController {
         this.meterRegistry = meterRegistry;
     }
 
-    @PostMapping
-    public void log(@PathVariable("level") String level, Map<String, Object> logMsg) {
-        Level logLevel = Level.valueOf(level.toUpperCase());
+    @PostMapping("/info")
+    public void info(@RequestBody Map<String, Object> logMsg) {
+        log(Level.INFO, logMsg);
+    }
+
+    @PostMapping("/warn")
+    public void warn(@RequestBody Map<String, Object> logMsg) {
+        log(Level.WARN, logMsg);
+    }
+
+    @PostMapping("/error")
+    public void error(@RequestBody Map<String, Object> logMsg) {
+        log(Level.ERROR, logMsg);
+    }
+
+    @PostMapping("/debug")
+    public void debug(@RequestBody Map<String, Object> logMsg) {
+        log(Level.DEBUG, logMsg);
+    }
+
+    @PostMapping("/trace")
+    public void trace(@RequestBody Map<String, Object> logMsg) {
+        log(Level.TRACE, logMsg);
+    }
+
+    public void log(Level level, Map<String, Object> logMsg) {
         String appname = resolveApplicationName(logMsg);
 
         meterRegistry.counter(
@@ -56,18 +79,18 @@ public class LoggController {
                 "origin_app",
                 appname,
                 "level",
-                logLevel.name()
+                level.name()
         ).increment();
 
         Object pinpoint = logMsg.get("pinpoint");
 
         if (pinpoint == null) {
-            logToLogback(logLevel, logMsg);
+            logToLogback(level, logMsg);
         } else {
             logMsg.remove("pinpoint");
             pinpointClient.enrichErrorData(appname, pinpoint, (enrichedError) -> {
                 logMsg.putAll(enrichedError);
-                logToLogback(logLevel, logMsg);
+                logToLogback(level, logMsg);
             });
         }
     }
