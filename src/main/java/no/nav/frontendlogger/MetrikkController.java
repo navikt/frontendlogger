@@ -20,7 +20,7 @@ public class MetrikkController {
 
     @PostMapping
     public void lagEvent(@RequestBody Event event) {
-        no.nav.common.metrics.Event newEvent = new no.nav.common.metrics.Event(event.getName());
+        no.nav.common.metrics.Event newEvent = new no.nav.common.metrics.Event(event.getName() + ".event");
 
         event.getFields().forEach(newEvent::addFieldToReport);
         event.getTags().forEach(newEvent::addTagToReport);
