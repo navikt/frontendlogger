@@ -39,7 +39,7 @@ jobs:
           VAR: version=${{ github.sha }},namespace=q0
 
   deploy-q1-fss:
-    if: github.ref == 'refs/heads/dev'
+    if: github.ref == 'refs/heads/spring_boot'
     needs: build
     runs-on: ubuntu-latest
     env:
