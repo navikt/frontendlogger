@@ -29,7 +29,7 @@ public class MetrikkController {
         event.getTags().forEach(newEvent::addTagToReport);
 
         // Legger til environment for bakoverkompabilitet
-        event.getTags().putIfAbsent("environment", resolveEnvironmentTag());
+        newEvent.getTags().putIfAbsent("environment", resolveEnvironmentTag());
 
         metricsClient.report(newEvent);
     }
