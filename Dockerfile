@@ -9,5 +9,5 @@ WORKDIR /source
 COPY --from=node-builder /source/build /source/src/main/resources/static
 RUN mvn package
 
-FROM ghcr.io/navikt/pus-nais-java-app/pus-nais-java-app:java11
+FROM ghcr.io/navikt/poao-baseimages/java:11
 COPY --from=builder /source/target/frontendlogger.jar app.jar
