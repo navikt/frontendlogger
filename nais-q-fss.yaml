@@ -36,4 +36,4 @@ spec:
       memory: 512Mi
   env:
     - name: CORS_ALLOWED_ORIGINS
-      value: ".adeo.no"
+      value: "https://*.adeo.no"
