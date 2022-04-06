@@ -14,14 +14,14 @@ spec:
     - https://modapp.adeo.no/frontendlogger
   port: 8080
   liveness:
-    path: frontendlogger/internal/isAlive
+    path: frontendlogger/internal/health/liveness
     initialDelay: 120
   readiness:
-    path: frontendlogger/internal/isReady
+    path: frontendlogger/internal/health/readiness
     initialDelay: 120
   prometheus:
     enabled: true
-    path: frontendlogger/internal/metrics
+    path: frontendlogger/internal/prometheus
   replicas:
     min: 2
     max: 2
