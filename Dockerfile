@@ -3,11 +3,11 @@ COPY /src/frontend /source
 WORKDIR /source
 RUN npm ci && npm run build
 
-FROM maven:3.6.3-jdk-8-slim as builder
+FROM maven:3.8.4-eclipse-temurin-11-alpine as builder
 COPY / /source
 WORKDIR /source
-COPY --from=node-builder /source/build /source/src/main/webapp
+COPY --from=node-builder /source/build /source/src/main/resources/static
 RUN mvn package
 
-FROM docker.pkg.github.com/navikt/pus-nais-java-app/pus-nais-java-app:java8
-COPY --from=builder /source/target/frontendlogger /app
+FROM ghcr.io/navikt/poao-baseimages/java:11
+COPY --from=builder /source/target/frontendlogger.jar app.jar
