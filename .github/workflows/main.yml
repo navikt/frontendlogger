@@ -21,7 +21,7 @@ jobs:
           docker build --tag ${IMAGE} .
           docker push ${IMAGE}
 
-  deploy-q0-fss:
+  deploy-dev-fss:
     if: github.ref == 'refs/heads/dev'
     needs: build
     runs-on: ubuntu-latest
@@ -30,30 +30,13 @@ jobs:
       PRINT_PAYLOAD: true
     steps:
       - uses: actions/checkout@v1
-      - name: Deploy application to Q0 fss
+      - name: Deploy application to dev fss
         uses: nais/deploy/actions/deploy@v1
         if: github.ref == 'refs/heads/dev'
         env:
           CLUSTER: dev-fss
           RESOURCE: nais-q-fss.yaml
-          VAR: version=${{ github.sha }},namespace=q0
-
-  deploy-q1-fss:
-    if: github.ref == 'refs/heads/dev'
-    needs: build
-    runs-on: ubuntu-latest
-    env:
-      APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-      PRINT_PAYLOAD: true
-    steps:
-      - uses: actions/checkout@v1
-      - name: Deploy application to Q1 fss
-        uses: nais/deploy/actions/deploy@v1
-        if: github.ref == 'refs/heads/dev'
-        env:
-          CLUSTER: dev-fss
-          RESOURCE: nais-q-fss.yaml
-          VAR: version=${{ github.sha }},namespace=q1
+          VAR: version=${{ github.sha }}
 
   deploy-prod-fss:
     if: github.ref == 'refs/heads/master'
