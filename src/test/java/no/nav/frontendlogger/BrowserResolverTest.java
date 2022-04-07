@@ -1,13 +1,15 @@
-package no.nav;
+package no.nav.frontendlogger;
 
 import lombok.val;
+import no.nav.frontendlogger.BrowserResolver;
 import org.junit.Test;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 public class BrowserResolverTest {
 
@@ -72,10 +74,8 @@ public class BrowserResolverTest {
 
     private void assertBrowser(String browser, String... userAgents) {
         Stream.of(userAgents).forEach(userAgent ->
-                assertThat(
-                        BrowserResolver.resolveBrowser(
-                                withUserAgent(userAgent))
-                ).isEqualTo(browser));
+                assertThat(BrowserResolver.resolveBrowser(withUserAgent(userAgent)), equalTo(browser))
+        );
     }
 
     private Map<String, Object> withUserAgent(String userAgent) {

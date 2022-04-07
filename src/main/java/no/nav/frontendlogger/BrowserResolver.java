@@ -1,4 +1,4 @@
-package no.nav;
+package no.nav.frontendlogger;
 
 import lombok.val;
 
