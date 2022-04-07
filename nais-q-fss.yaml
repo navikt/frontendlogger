@@ -2,17 +2,21 @@ kind: Application
 apiVersion: nais.io/v1alpha1
 metadata:
   name: frontendlogger-fss
-  namespace: {{namespace}}
+  namespace: pto
   labels:
     team: pto
   cluster: dev-fss
 spec:
   image: docker.pkg.github.com/navikt/frontendlogger/frontendlogger:{{version}}
   ingresses:
-    - https://frontendlogger-{{namespace}}.nais.adeo.no
-    - https://app-{{namespace}}.adeo.no/frontendlogger
-    - https://app-{{namespace}}.dev.adeo.no/frontendlogger
-    - https://modapp-{{namespace}}.adeo.no/frontendlogger
+    - https://frontendlogger-q0.nais.adeo.no
+    - https://app-q0.adeo.no/frontendlogger
+    - https://app-q0.dev.adeo.no/frontendlogger
+    - https://modapp-q0.adeo.no/frontendlogger
+    - https://frontendlogger-q1.nais.adeo.no
+    - https://app-q1.adeo.no/frontendlogger
+    - https://app-q1.dev.adeo.no/frontendlogger
+    - https://modapp-q1.adeo.no/frontendlogger
   port: 8080
   liveness:
     path: frontendlogger/internal/health/liveness
