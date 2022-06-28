@@ -12,6 +12,7 @@ spec:
     - https://frontendlogger.nais.adeo.no
     - https://app.adeo.no/frontendlogger
     - https://modapp.adeo.no/frontendlogger
+    - https://frontendlogger.prod-fss-pub.nais.io
   port: 8080
   liveness:
     path: frontendlogger/internal/health/liveness
