@@ -23,8 +23,8 @@ spec:
     enabled: true
     path: frontendlogger/internal/prometheus
   replicas:
-    min: 2
-    max: 2
+    min: 0
+    max: 0
     cpuThresholdPercentage: 50
   resources:
     limits:
